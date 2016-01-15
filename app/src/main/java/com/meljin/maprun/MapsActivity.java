@@ -3,6 +3,7 @@ package com.meljin.maprun;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.VisibleRegion;
 
@@ -174,8 +176,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 bottom = vr.latLngBounds.southwest.latitude;
 
                 //Create 2D Array of LatLngs
-                double incrX = Math.abs(right - left)/2;
-                double incrY = Math.abs(top - bottom)/2;
+                double incrX = Math.abs(right - left)/5;
+                double incrY = Math.abs(top - bottom)/5;
                 for(double x = left; x < right; x += incrX){
                     for(double y = top; y > bottom; y -= incrY){
                         LatLng latLng = new LatLng(y, x);
@@ -190,19 +192,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public static void addPointsAndGhosts(ArrayList<LatLng> latLngs){
         int i = 0;
-        //for(LatLng coord : latLngs){
-        //if(i % GHOST_INCR == 0){
-        Ghost g = new Ghost(latLngs.get(2));
-        ghosts.add(g);
-        g.setGhost(mMap);
-          /*  }
+        for(LatLng coord : latLngs){
+            if(i % GHOST_INCR == 0){
+                Ghost g = new Ghost(latLngs.get(2));
+                ghosts.add(g);
+                g.setGhost(mMap);
+            }
             else {
                 Circle c = mMap.addCircle(new CircleOptions().center(coord).radius(8).fillColor(Color.GREEN).strokeColor(Color.GREEN));
                 points.put(coord, c);
-            }*/
-        //    i++;
+            }
+            i++;
 
-       // }
+        }
     }
 
     public static void removePoint(LatLng latLng){

@@ -54,7 +54,7 @@ public class Ghost{
                 if(msg.what == GOT_PATH){
                     ArrayList<LatLng> path = (ArrayList<LatLng>) msg.obj;
                     Log.i("BEFORE RUNNING", Integer.toString(path.size()));
-                    Animator.animatePath(marker, path);
+                    //Animator.animatePath(marker, path);
                 }
                 super.handleMessage(msg);
             }

@@ -1,21 +1,15 @@
 package com.meljin.maprun;
 
-import android.animation.ObjectAnimator;
-import android.animation.TypeEvaluator;
-import android.util.Log;
-import android.util.Property;
-
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-
-import java.util.ArrayList;
-
 /**
  * Created by s_jin01 on 1/3/16.
  */
 public class Animator {
 
-    static void animateLeg(Marker marker, LatLng finalPosition){
+    /*private static AnimatorSet anim;
+
+    static void animateLeg(Marker marker, ArrayList<LatLng> finalPosition){
+        List<Animator> animators = new ArrayList<Animator>();
+        anim = new AnimatorSet();
         Property<Marker, LatLng> property = Property.of(Marker.class, LatLng.class, "position");
         TypeEvaluator<LatLng>  typeEvaluator = new TypeEvaluator<LatLng>() {
             @Override
@@ -25,17 +19,23 @@ public class Animator {
                 return new LatLng(lat, lng);
             }
         };
-        ObjectAnimator animator = ObjectAnimator.ofObject(marker, property, typeEvaluator, finalPosition);
-        animator.setDuration(5000);
-        animator.start();
-
+        for (int i = 0; i < finalPosition.size(); i++) {
+            Double lat = marker.getPosition().latitude;
+            Double lng = marker.getPosition().longitude;
+            Log.i("START POSITION", Double.toString(lat) + ", " + Double.toString(lng));
+            ObjectAnimator animator = ObjectAnimator.ofObject(marker, property, typeEvaluator, finalPosition.get(i));
+            animator.setDuration(5000);
+            animators.add(animator);
+        }
+        anim.playSequentially(animators);
     }
     static void animatePath(Marker marker, ArrayList<LatLng> finalPosition) {
+        anim = new AnimatorSet();
         for (int i = 0; i < finalPosition.size(); i++){
             Double lat = marker.getPosition().latitude;
             Double lng = marker.getPosition().longitude;
             Log.i("START POSITION", Double.toString(lat) + ", " + Double.toString(lng));
-            animateLeg(marker, finalPosition.get(i));
+            anim.playSequentially();animateLeg(marker, finalPosition.get(i));
         }
-    }
+    }*/
 }

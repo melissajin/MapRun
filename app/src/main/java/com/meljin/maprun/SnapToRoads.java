@@ -45,8 +45,8 @@ class SnapToRoads extends AsyncTask<ArrayList<LatLng>, Void, ArrayList<LatLng>> 
                 Double lng = latLngs.get(i).longitude;
                 URL url = new URL("http://maps.google.com/maps/api/directions/json?origin="+lat+","+lng+"&destination="+lat+","+lng+"&sensor=true");
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.setReadTimeout(10000 /* milliseconds */);
-                con.setConnectTimeout(15000 /* milliseconds */);
+                //con.setReadTimeout(10000 /* milliseconds */);
+                //con.setConnectTimeout(15000 /* milliseconds */);
                 con.connect();
                 if (con.getResponseCode() == 200) {
 
@@ -57,12 +57,9 @@ class SnapToRoads extends AsyncTask<ArrayList<LatLng>, Void, ArrayList<LatLng>> 
                     while ((read = rd.read(buf)) > 0) {
                         sb.append(buf, 0, read);
                     }
-                    //Log.v(TAG, sb.toString());
 
                     //JSON parsing to get LatLng of roads where markers are to be placed
                     String str = sb.toString();
-
-
                     JSONObject json = new JSONObject(str);
                     JSONArray routesArray = json.getJSONArray("routes");
                     JSONObject route = routesArray.getJSONObject(0);
@@ -73,32 +70,19 @@ class SnapToRoads extends AsyncTask<ArrayList<LatLng>, Void, ArrayList<LatLng>> 
 
                     LatLng newLatLng = new LatLng(newLat, newLng);
                     retVal.add(newLatLng);
-                    /*
-                    //if already matched point to road
-                    if(dist.get(newLatLng) != null){
-                        //if shorter distance is found
-                        if(getDistance(latLngs.get(i), newLatLng).compareTo(dist.get(newLatLng)) < 0){
-                            dist.put(newLatLng, getDistance(latLngs.get(i), newLatLng));
-                        }
-
-                    }
-                    //if haven't matched point to road yet
-                    else{
-                        dist.put(newLatLng, getDistance(latLngs.get(i), newLatLng));
-                    }
-                    */
-
                 }
                 con.disconnect();
                 i++;
-                Log.i("COUNT", Integer.toString(cnt));
-                /*cnt++;
-                //Needed so does not exceed Directions API usage limits...makes it soooo slow....
+/*
+                cnt++;
+
                 if(cnt == 8) {
+                    Log.i("SLEEPING", "SKDflKSdjf");
                     Thread.sleep(1000);
                     cnt = 0;
                 }
-                */
+*/
+                //Needed so does not exceed Directions API usage limits...makes it soooo slow....
                 Thread.sleep(500);
             }
         } catch (Exception e) {
